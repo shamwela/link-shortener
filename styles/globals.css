@@ -28,7 +28,7 @@
   }
 
   input {
-    @apply p-4 text-primary;
+    @apply outline-none p-4 text-primary;
   }
 
   button {

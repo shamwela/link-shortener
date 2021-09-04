@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import Head from 'next/head'
+import Error from 'components/Error'
 import Output from 'components/Output'
 
 const useStickyState = (defaultValue, key: string) => {
@@ -51,31 +53,39 @@ const Home = () => {
   }
 
   return (
-    <main className='p-4 grid gap-y-8'>
-      <h1>Link Shortener</h1>
+    <>
+      <Head>
+        <title>Link Shortener</title>
+      </Head>
 
-      <span>Shortening a link will take about 30 seconds.</span>
+      <main className='p-4 max-w-3xl mx-auto grid gap-y-8'>
+        <h1>Link Shortener</h1>
 
-      <input
-        value={longLink}
-        onChange={(event) => setLongLink(event.currentTarget.value)}
-        type='text'
-        placeholder='Enter your link'
-        className='w-full'
-      />
+        <span>Shortening a link will take about 30 seconds.</span>
 
-      <button onClick={handleSubmit} className='w-full'>
-        Shorten
-      </button>
-
-      {shortLinks.map((shortLink: string, index: number) => (
-        <Output
-          longLink={longLinks[index]}
-          shortLink={shortLink}
-          key={shortLink}
+        <input
+          value={longLink}
+          onChange={(event) => setLongLink(event.currentTarget.value)}
+          type='text'
+          placeholder='Enter your link'
+          className='w-full'
         />
-      ))}
-    </main>
+
+        {error && <Error message={error} />}
+
+        <button onClick={handleSubmit} className='w-full'>
+          Shorten
+        </button>
+
+        {shortLinks.map((shortLink: string, index: number) => (
+          <Output
+            longLink={longLinks[index]}
+            shortLink={shortLink}
+            key={shortLink}
+          />
+        ))}
+      </main>
+    </>
   )
 }
 
