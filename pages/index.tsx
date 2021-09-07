@@ -26,15 +26,18 @@ const Home = () => {
   const [longLinks, setLongLinks] = useStickyState([], 'longLinks')
   const [shortLinks, setShortLinks] = useStickyState([], 'shortLinks')
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async () => {
     setError('')
+    setIsLoading(true)
 
     const response = await fetch(
       'https://api.shrtco.de/v2/shorten?url=' + longLink
     )
 
     if (!response.ok) {
+      setIsLoading(false)
       setError('The link you entered is invalid.')
       return
     }
@@ -50,6 +53,8 @@ const Home = () => {
       ...previousShortLinks,
       short_link,
     ])
+
+    setIsLoading(false)
   }
 
   return (
@@ -60,8 +65,6 @@ const Home = () => {
 
       <main className='px-4 py-8 max-w-3xl mx-auto min-h-screen flex flex-col gap-y-8'>
         <h1>Link Shortener</h1>
-
-        <span>Shortening a link will take about 30 seconds.</span>
 
         <input
           value={longLink}
@@ -76,6 +79,8 @@ const Home = () => {
         <button onClick={handleSubmit} className='w-full'>
           Shorten
         </button>
+
+        {isLoading && <span>Loading, please wait about 30 seconds.</span>}
 
         {shortLinks.map((shortLink: string, index: number) => (
           <Output
