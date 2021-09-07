@@ -58,7 +58,7 @@ const Home = () => {
         <title>Link Shortener</title>
       </Head>
 
-      <main className='px-4 py-8 max-w-3xl mx-auto grid gap-y-8'>
+      <main className='px-4 py-8 max-w-3xl mx-auto min-h-screen flex flex-col gap-y-8'>
         <h1>Link Shortener</h1>
 
         <span>Shortening a link will take about 30 seconds.</span>
